@@ -1,0 +1,46 @@
+HEADER
+======
+
+Firmware images have a 92 byte header.
+This codes the following fields:
+
+Image 1 Program Header:
+   Signature: a0e7
+     Control: 0005
+   Major Rev: 0003
+   Minor Rev: 0000
+  Build Time: 2012/5/28 10:59:34 Z
+ File Length: 3296519 bytes
+Load Address: 80004000
+    Filename: CG3101D_2VGUKS_V5.5.5R36_D30RG11u_20120528.bin
+         HCS: 69b0
+         CRC: 8cad7588
+
+HCS=Header checksum
+Header checksum applies to first 84 bytes i.e the HCS and CRC fields are not included
+Checksum uses generator polynomial 0x1021, and can be computed using:
+
+jacksum -a crc:16,1021,ffff,false,false,ffff -x firmware_header_bytes
+
+Body data is uses 32bit algorithm (CRC32), generator polynomial 0x04c11db7
+jacksum -a crc:32,04C11DB7,FFFFFFFF,false,false,FFFFFFFF -x firmware_body_bytes
+
+Note:
+Both checksum algorithms are implemented with Big Endian ordering.
+Bit7 is the most significant bit, and should be processed first.
+No bit reflection needs to take place in the final processing stage.
+
+
+BODY
+====
+
+The data body follows the header and is LZMA compressed.
+LZMA format differs slightly as it has no decompressed length field.
+
+
+
+CODE
+====
+
+Disasemble using
+mipsel-linux-gnu-objdump -D -m mips:isa32r2 -b binary  --endian=big code.bin

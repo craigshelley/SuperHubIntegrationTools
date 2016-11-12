@@ -1,0 +1,20 @@
+Size 8 MBytes (8388608 Bytes)
+Sector size for erase: 0x10000 (64k, 65536)
+Buffer size for write: 256 bytes, though this poses no limitations whatsoever
+
+
+Memory space 0x000000 - 0x800000
+
+
+
+0x000000 - 0x00FFFF  Bootloader (1st sector)
+0x010000 - 0x01FFFF  Permanent settings (non-vol)
+0x020000 - ...       Firmware Image1
+0x400000 - ...       Firmware Image2
+0x7F0000 - 0x7FFFFF  Dynamic settings (non-vol)
+
+
+Note:
+Firmware must be aligned to 0x10000 boundary.
+Bootloader scans memory in steps of 0x10000 looking for 0xA0E7 magic number.
+After firmware upgrade, old firmware images are "invalidated" by overwriting memory areas with 0x0000 in aligned 0x4000 byte address increments.

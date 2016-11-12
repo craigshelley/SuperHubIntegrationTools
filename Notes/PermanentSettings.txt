@@ -1,0 +1,17 @@
+Permanent settings are stored in the block following the boot block, i.e in the block @ 0x10000
+
+Normal settings location: 0x10000
+Permanent settings size:  0x10000
+
+Addresses below are relative to start of settings block:
+
+Settings segment size location:          0xFFF8   Default value: 0x00004000
+Settings area size (segments) location:  0xFFFC   Default value: 0xFFFFFFFE
+Settings block start offset:             0x00CA
+
+Note:
+Settings area size is a bit field. Each time a new setting block is written, one bit is cleared from the end of the field.
+The number of clear bits indicates the number of blocks stored in the settings area.
+The last stored block is the active block.
+
+

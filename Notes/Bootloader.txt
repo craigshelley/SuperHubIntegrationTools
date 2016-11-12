@@ -1,0 +1,50 @@
+Bootloader contains advanced features to allow flash memory to be reprogrammed.
+Connect serial port and press "g" on boot to get to menu.
+
+Bootloader is compressed with LZMA and can be extracted with
+
+dd if=my_modem.img.bootloader of=my_modem.img.bootloader.lzma bs=1 skip=$(( 0x1fdd )) 
+lzma -v -d -F raw --lzma1=dict=$(( 0x20000 )) my_modem.img.bootloader.lzma --stdout > my_modem.img.bootloader.decompressed
+
+This can then be disassembled using
+mipsel-linux-gnu-objdump -D -m mips:isa32r2 -b binary  --endian=big my_modem.img.bootloader.decompressed > my_modem.img.bootloader.asm
+
+
+P
+BCM338031 TP0 
+1
+Sync:1 
+346890
+MemSize:             64 M
+
+BootLoader Version: 2.3.0beta7 Pre-release Gnu pcminit spiboot reduced DDR drive
+Build Date: Jul  2 2010
+Build Time: 14:01:07
+SPI flash ID 0x010216, size 8MB, block size 64KB, write buffer 256, busy bit 1
+
+Signature/PID: a0e7
+
+Reset BCM53115 - Low GPIO-16 5ms
+Board IP Address  [0.0.0.0]:           
+Board IP Mask     [255.255.255.0]:     
+Board IP Gateway  [0.0.0.0]:           
+Board MAC Address [00:10:18:ff:ff:ff]: 
+
+Internal/External phy? (e/i)[i] 
+Waiting for link up...
+
+
+Main Menu:
+==========
+  b) Boot from flash
+  g) Download and run from RAM
+  d) Download and save to flash
+  e) Erase flash sector
+  m) Set mode
+  s) Store bootloader parameters to flash
+  i) Re-init ethernet
+  r) Read memory
+  w) Write memory
+  j) Jump to arbitrary address
+  z) Reset
+
